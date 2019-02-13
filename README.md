@@ -11,7 +11,7 @@ Insert your code into the respective folders, i.e. `scripts`, `rules`, and `envs
 
 ### Step 1: Install workflow
 
-If you simply want to use this workflow, download and extract the [latest release](https://github.com/acshetty/sncRNA-seq-analysis.git/releases).
+If you simply want to use this workflow, download and extract the [latest release](https://github.com/acshetty/sncRNA-seq-analysis.git).
 If you intend to modify and further develop this workflow, fork this repository. Please consider providing any generally applicable modifications via a pull request.
 
 In any case, if you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this repository and, if available, its DOI (see above).
