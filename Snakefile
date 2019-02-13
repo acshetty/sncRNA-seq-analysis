@@ -1,9 +1,12 @@
-# The main entry point of your workflow.
-# After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
+import pandas as pd
+from snakemake.utils import validate, min_version
 
+##### set minimum snakemake version #####
+min_version("3.2")
 
+##### load config and sample sheets #####
 configfile: "config.yaml"
-
+validate(config, schema="schemas/config.schema.yaml")
 
 rule all:
     input:
