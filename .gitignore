@@ -4,6 +4,8 @@
 !scripts/common
 !scripts/common/*
 scripts/.snakemake*
+!schemas
+!schemas/*
 !Snakefile
 !config.yaml
 !samples.tsv

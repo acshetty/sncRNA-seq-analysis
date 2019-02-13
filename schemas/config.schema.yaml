@@ -1,0 +1,115 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+properties:
+  samples:
+    type: string
+  units:
+    type: string
+  adapter:
+    type: string
+    pattern: "^[ACGT]+$"
+
+  genome:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  ncRNA:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  rRNA:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  tRNA:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  miRNA:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  piRNA:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  Rfam:
+    type: object
+    properties:
+      sequence:
+        type: string
+      annotation:
+        type: string
+    required:
+      - sequence
+      - annotation
+
+  params:
+    type: object
+    properties:
+      bowtie: 
+        type: string
+      trimmomatic:
+        type: string
+    required:
+      - bowtie
+      - trimmomatic
+
+required:
+  - samples
+  - units
+  - adapter
+  - genome
+  - ncRNA
+  - rRNA
+  - tRNA
+  - miRNA
+  - piRNA
+  - Rfam
+  - params
