@@ -22,4 +22,4 @@ scripts/.snakemake*
 !.gitattributes
 !.editorconfig
 !.travis.yml
-!.test
+.test

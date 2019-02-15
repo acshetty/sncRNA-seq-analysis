@@ -11,7 +11,9 @@ properties:
     type: string
   adapter:
     type: string
-    pattern: "^[ACGT]+$"
+  outdir:
+    type: string
+    default: "."
 
   genome:
     type: object
@@ -93,13 +95,13 @@ properties:
   params:
     type: object
     properties:
-      bowtie: 
-        type: string
       trimmomatic:
         type: string
+      bowtie: 
+        type: string
     required:
-      - bowtie
       - trimmomatic
+      - bowtie
 
 required:
   - samples
