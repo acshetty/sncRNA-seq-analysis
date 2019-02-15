@@ -1,8 +1,8 @@
 # path to sample info (Tab-delimited format, columns: sample, condition)
-samples: samples.txt
+samples: .test/info/samples.txt
 
 # path to sequencing files (Tab-delimited format, columns: sample, unit, fq1, [fq2])
-units: units.txt
+units: .test/info/fastq.txt
 
 # path to adapter file (FastA format)
 adapter: .test/references/adapters
