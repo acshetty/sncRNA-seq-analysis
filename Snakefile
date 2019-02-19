@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from snakemake.utils import validate, min_version
 
@@ -21,12 +22,13 @@ RNATYPES = ["genome","ncRNA","rRNA","tRNA","miRNA","piRNA","Rfam"]
 rule all:
 	input:
 		expand("config["outdir"])/counts/{SID}/{SID}.{RType}.count.txt", SID={samples.sample}, RType=RNATYPES), 
-		expand("config["outdir"])/count_matrices/{RType}.count.txt", RType=RNATYPES)
+		#expand("config["outdir"])/count_matrices/{RType}.count.txt", RType=RNATYPES)
 
 ##### load rules #####
+include: "rules/common.smk"
 include: "rules/index_ref.smk"
-include: "rules/trim_fq.smk"
-include: "rules/align_reads.smk"
+#include: "rules/trim_fq.smk"
+#include: "rules/align_reads.smk"
 #include: "rules/htseq_count.smk"
 #include: "rules/samtools_count.smk"
 #include: "rules/other.smk"

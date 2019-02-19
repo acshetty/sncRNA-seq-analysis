@@ -55,6 +55,8 @@ Rfam:
 params:
   # path to trimmomatic executable
   trimmomatic: ""
+  # path to bowtie-build executable
+  bowtie-build: ""
   # path to bowtie executable
   bowtie: ""
 
