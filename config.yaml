@@ -5,7 +5,7 @@ samples: .test/info/samples.txt
 units: .test/info/fastq.txt
 
 # path to adapter file (FastA format)
-adapter: .test/references/adapters
+adapter: .test/references/adapters/adapters.fa
 
 # path to output directory
 outdir: /local/projects/TBALE/rnaseq/analysis/pipeline/test_v20190215
@@ -79,6 +79,8 @@ Rfam:
 params:
   # path to trimmomatic executable
   trimmomatic: "/usr/local/packages/trimmomatic-0.38/trimmomatic-0.38.jar"
+  # minimum read length after trimming
+  minlength: 15
   # path to bowtie-build executable
   bowtie-build: "/usr/local/bin/bowtie-build"
   # path to bowtie executable

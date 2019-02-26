@@ -1,40 +1,36 @@
 #!/bin/sh
 
 function Usage {
-    echo "Usage: $1 <bowtie_build_bin> <fasta_file> <outdir> <outprefix>"
+    echo "Usage: $1 <trimmomatic_jar_file> <extra_parameters> <logfile> <input_fastq> <trimmed_fastq> <adapter_fasta> <min_read_length>"
 }
 
-if (( $# < 4 )) || (( $# > 4 )); then
+if (( $# < 7 )) || (( $# > 7 )); then
     Usage $0
     exit 1
 fi
 
 
-EXE=$1
-REF=$2
-OUT=$3
-PFX=$4
+JAR=$1
+EXP=$2
+LOG=$3
+INP=$4
+OUT=$5
+ADP=$6
+MRL=$7
 
-BSN=`basename ${REF}`
-
-if [ ! -e "${OUT}/${BSN}" ]; then
-	ln -s ${BSN} ${OUT}
-fi
-
-if [ ! -e "${EXE}" ]; then
-	echo "Error! Missing file ${EXE}!"
+if [ ! -e "${JAR}" ]; then
+	echo "Error! Missing file ${JAR}!"
 	exit 1
 fi
 
-${EXE} -f ${OUT}/${BSN} ${OUT}/${PFX}
+java -jar ${JAR} ${EXP} -trimlog ${LOG} ${INP} ${OUT} ILLUMINACLIP:${ADP} MINLEN:${MRL}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
-	touch ${OUT}/Index.done
-	echo "Success! Indexing of ${REF} successful!"
+   echo "Success! Trimming of reads in ${INP} succesful!"
 else
-	echo "Error! Indexing of ${REF} failed!"
-	exit 1
+   echo "Error! Trimming of reads in ${INP} failed!"
+   exit 1
 fi
 
 echo ""
