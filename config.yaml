@@ -10,53 +10,77 @@ adapter: .test/references/adapters
 # path to output directory
 outdir: /local/projects/TBALE/rnaseq/analysis/pipeline/test_v20190215
 
+# Reference Types
+rnatypes:
+    genome: genome
+    ncRNA: ncRNA
+    rRNA: rRNA
+    tRNA: tRNA
+    miRNA: miRNA
+    piRNA: piRNA
+    Rfam: Rfam
+
 genome:
   # path to reference genome sequence (FastA format)
   sequence: .test/references/organism/Human/genome/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+  # path to output directory
+  outdir: genome
   # path to reference genome annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/genome/Homo_sapiens.GRCh38.93.gtf
 
 ncRNA:
   # path to ncRNA sequence (FastA format)
   sequence: .test/references/organism/Human/ncRNA/Homo_sapiens.GRCh38.ncrna.fa
+  # path to output directory
+  outdir: ncRNA
   # path to ncRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/ncRNA/Homo_sapiens.GRCh38.ncrna.gtf
 
 rRNA:
   # path to rRNA sequence (FastA format)
   sequence: .test/references/organism/Human/rRNA/human_rRNAdb.fa
+  # path to output directory
+  outdir: rRNA
   # path to rRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/rRNA/human_rRNAdb.gtf
 
 tRNA:
   # path to tRNA sequence (FastA format)
   sequence: .test/references/organism/Human/tRNA/hg19-tRNAs.fa
+  # path to output directory
+  outdir: tRNA
   # path to tRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/tRNA/hg19-tRNAs.gtf
 
 miRNA:
   # path to miRNA sequence (FastA format)
   sequence: .test/references/organism/Human/miRNA/mature.hsa.fa
+  # path to output directory
+  outdir: miRNA
   # path to miRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/miRNA/mature.hsa.gtf
 
 piRNA:
   # path to piRNA sequence (FastA format)
   sequence: .test/references/organism/Human/piRNA/piR_human.fa
+  # path to output directory
+  outdir: piRNA
   # path to piRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/piRNA/piR_human.gtf
 
 Rfam:
   # path to Rfam database sequence (FastA format)
   sequence: .test/references/organism/Human/Rfam/Rfam-12.3-human.fa
+  # path to output directory
+  outdir: Rfam
   # path to Rfam database annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/Rfam/Rfam-12.3-human.gtf
 
 params:
   # path to trimmomatic executable
-  trimmomatic: ""
+  trimmomatic: "/usr/local/packages/trimmomatic-0.38/trimmomatic-0.38.jar"
   # path to bowtie-build executable
-  bowtie-build: ""
+  bowtie-build: "/usr/local/bin/bowtie-build"
   # path to bowtie executable
-  bowtie: ""
+  bowtie: "/usr/local/bin/bowtie"
 
