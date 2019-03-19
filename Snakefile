@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, glob
 import pandas as pd
 from snakemake.utils import validate, min_version
 
@@ -17,7 +17,7 @@ validate(samples, schema="schemas/samples.schema.yaml")
 units = pd.read_table(config["units"], dtype=str).set_index(["sample", "unit"], drop=False)
 units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])  # enforce str in index
 validate(units, schema="schemas/units.schema.yaml")
-units['sampleID'] = units[['sample', 'unit']].apply(lambda x: '-'.join(x), axis=1)
+units['sampleID'] = units[['sample', 'unit']].apply(lambda x: '_'.join(x), axis=1)
 
 RNATYPES = "genome,ncRNA,rRNA,tRNA,miRNA,piRNA,Rfam".split(',')
 
@@ -28,7 +28,8 @@ FOLDERS = "000_index_ref,010_trim_fq,020_align_reads".split(',')
 rule all:
 	input:
 		expand(config["outdir"] + "/000_index_ref/{rnatype}/{rnatype}.index.done", rnatype=config["rnatypes"]), 
-		expand(config["outdir"] + "/010_trim_fq/{sampleID}.trimmed.fastq.gz", sampleID=units["sampleID"])
+		expand(config["outdir"] + "/010_trim_fq/{sampleID}.trimmed.fastq.gz", sampleID=units["sampleID"]), 
+		expand(config["outdir"] + "/020_align_reads/{sampleID}/{sampleID}.{rnatype}.bowtie.bam", sampleID=samples["sample"], rnatype=config["rnatypes"])
 
 rule folders:
     output:
@@ -48,6 +49,12 @@ rule trim_folder:
     shell:
     	"mkdir -p -m770 {output}"
 
+rule align_folders:
+    output:
+    	["{}/020_align_reads/{}".format(config["outdir"], sampleID) for sampleID in samples["sample"]]
+    shell:
+    	"mkdir -p -m770 {output}"
+
 
 ##### load rules #####
 include: "rules/common.smk"
@@ -56,7 +63,7 @@ include: "rules/index_ref.smk"
 
 include: "rules/trim_fq.smk"
 
-#include: "rules/align_reads.smk"
+include: "rules/align_reads.smk"
 
 #include: "rules/htseq_count.smk"
 

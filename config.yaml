@@ -85,4 +85,6 @@ params:
   bowtie-build: "/usr/local/bin/bowtie-build"
   # path to bowtie executable
   bowtie: "/usr/local/bin/bowtie"
+  # path to samtools executable
+  samtools: "/usr/local/bin/samtools"
 
