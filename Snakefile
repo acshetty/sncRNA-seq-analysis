@@ -21,7 +21,7 @@ units['sampleID'] = units[['sample', 'unit']].apply(lambda x: '_'.join(x), axis=
 
 RNATYPES = "genome,ncRNA,rRNA,tRNA,miRNA,piRNA,Rfam".split(',')
 
-FOLDERS = "000_index_ref,010_trim_fq,020_align_reads".split(',')
+FOLDERS = "000_index_ref,010_trim_fq,020_align_reads,030_read_counts".split(',')
 
 
 ##### target rules #####
@@ -29,7 +29,8 @@ rule all:
 	input:
 		expand(config["outdir"] + "/000_index_ref/{rnatype}/{rnatype}.index.done", rnatype=config["rnatypes"]), 
 		expand(config["outdir"] + "/010_trim_fq/{sampleID}.trimmed.fastq.gz", sampleID=units["sampleID"]), 
-		expand(config["outdir"] + "/020_align_reads/{sampleID}/{sampleID}.{rnatype}.bowtie.bam", sampleID=samples["sample"], rnatype=config["rnatypes"])
+		expand(config["outdir"] + "/020_align_reads/{sampleID}/{sampleID}.{rnatype}.bowtie.bam", sampleID=samples["sample"], rnatype=config["rnatypes"]), 
+		expand(config["outdir"] + "/030_read_counts/{sampleID}/{sampleID}.{rnatype}.bowtie.count", sampleID=samples["sample"], rnatype=config["rnatypes"])
 
 rule folders:
     output:
@@ -65,9 +66,7 @@ include: "rules/trim_fq.smk"
 
 include: "rules/align_reads.smk"
 
-#include: "rules/htseq_count.smk"
-
-#include: "rules/samtools_count.smk"
+include: "rules/compute_expr.smk"
 
 #include: "rules/other.smk"
 
