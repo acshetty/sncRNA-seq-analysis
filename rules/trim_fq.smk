@@ -12,9 +12,11 @@ rule trim_fastq:
     	minlength=config["params"]["minlength"]
     output:
         config["outdir"] + "/010_trim_fq/{sample}_{unit}.trimmed.fastq.gz"
+    priority:
+    	3
     log:
     	logfile=config["outdir"] + "/010_trim_fq/{sample}_{unit}.trimmed.log"
     message:
     	"### Trimming reads for the following file {input}"
     shell:
-    	'echo ./scripts/trim_reads.sh {params.bin} \'{params.extra}\' {log} {input} {output} {params.adapter} {params.minlength}'
+    	'./scripts/trim_reads.sh {params.bin} \'{params.extra}\' {log} {input} {output} {params.adapter} {params.minlength}'

@@ -5,7 +5,9 @@ rule compute_count:
     	sambin=config["params"]["samtools"]
     output:
     	cnt=config["outdir"] + "/030_read_counts/{sample}/{sample}.{rnatype}.bowtie.count"
+    priority:
+    	1
     message:
     	"### Computing ncRNA counts for the following file {input.bam}"
     shell:
-    	'echo ./scripts/compute_count.sh {params.sambin} {input.bam} {output.cnt}'
+    	'./scripts/compute_count.sh {params.sambin} {input.bam} {output.cnt}'

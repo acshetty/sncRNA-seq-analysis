@@ -17,20 +17,18 @@ PFX=$4
 
 BSN=`basename ${REF}`
 
-if [ ! -e "${OUT}/${BSN}" ]; then
-	ln -s ${BSN} ${OUT}
-fi
+DIR=`dirname ${OUT}`
 
 if [ ! -e "${EXE}" ]; then
 	echo "Error! Missing file ${EXE}!"
 	exit 1
 fi
 
-${EXE} -f ${OUT}/${BSN} ${OUT}/${PFX}
+${EXE} -f ${REF} ${DIR}/${PFX}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
-	touch ${OUT}/Index.done
+	touch ${OUT}
 	echo "Success! Indexing of ${REF} successful!"
 else
 	echo "Error! Indexing of ${REF} failed!"
