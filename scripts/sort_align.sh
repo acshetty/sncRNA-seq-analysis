@@ -1,35 +1,41 @@
 #!/bin/sh
 
 function Usage {
-    echo "Usage: $1 <trimmomatic_jar_file> <extra_parameters> <logfile> <input_fastq> <trimmed_fastq> <adapter_fasta> <min_read_length>"
+    echo "Usage: $1 <samtools_bin_file> <input_bam> <sorted_bam>"
 }
 
-if (( $# < 7 )) || (( $# > 7 )); then
+if (( $# < 3 )) || (( $# > 3 )); then
     Usage $0
     exit 1
 fi
 
 
-JAR=$1
-EXP=$2
-LOG=$3
-INP=$4
-OUT=$5
-ADP=$6
-MRL=$7
+SMT=$1
+INP=$2
+OUT=$3
 
-if [ ! -e "${JAR}" ]; then
-	echo "Error! Missing file ${JAR}!"
+if [ ! -e "${SMT}" ]; then
+	echo "Error! Missing file ${SMT}!"
 	exit 1
 fi
 
-java -jar ${JAR} ${EXP} -trimlog ${LOG} ${INP} ${OUT} ILLUMINACLIP:${ADP}:2:30:7 MINLEN:${MRL}
+${SMT} sort -o ${OUT} ${INP}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
-   echo "Success! Trimming of reads in ${INP} succesful!"
+   echo "Success! Sorting of reads in ${INP} to ${OUT} succesful!"
 else
-   echo "Error! Trimming of reads in ${INP} failed!"
+   echo "Error! Sorting of reads in ${INP} to ${OUT} failed!"
+   exit 1
+fi
+
+${SMT} index ${OUT}
+
+eStatus=$?
+if [ $eStatus -eq 0 ];then
+   echo "Success! Indexing of ${OUT} succesful!"
+else
+   echo "Error! Indexing of ${OUT} failed!"
    exit 1
 fi
 

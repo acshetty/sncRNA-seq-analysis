@@ -28,8 +28,8 @@ if [ ! -e "${SMT}" ]; then
 	exit 1
 fi
 
-if [ ! -e "${IDX}" ]; then
-	echo "Error! Missing file ${IDX}!"
+if [ ! -e "${IDX}.rev.2.ebwt" ]; then
+	echo "Error! Missing file ${IDX}.rev.2.ebwt!"
 	exit 1
 fi
 

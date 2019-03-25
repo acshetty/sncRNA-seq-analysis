@@ -7,7 +7,7 @@ rule index_fasta:
     output:
         outdir=config["outdir"] + "/000_index_ref/{rnatype}/{rnatype}.index.done"
     priority:
-    	4
+    	100
     message:
     	"### Indexing of the following file {input}"
     shell:

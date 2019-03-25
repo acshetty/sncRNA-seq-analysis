@@ -13,7 +13,7 @@ rule trim_fastq:
     output:
         config["outdir"] + "/010_trim_fq/{sample}_{unit}.trimmed.fastq.gz"
     priority:
-    	3
+    	90
     log:
     	logfile=config["outdir"] + "/010_trim_fq/{sample}_{unit}.trimmed.log"
     message:
