@@ -35,13 +35,16 @@ fi
 
 SAM=`echo ${OUT} | sed -e 's/bowtie.bam/bowtie.sam/'`
 
-${BWT} ${EXP} ${IDX} ${INP} ${SAM} | tee ${LOG}
+#FQS = `cat ${INP} | tr '\n' ',' | sed -e 's/,$//'`
+FQS=${INP}
+
+${BWT} ${EXP} ${IDX} ${FQS} ${SAM} | tee ${LOG}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
-   echo "Success! Alignment of reads in ${INP} to ${SAM} succesful!"
+   echo "Success! Alignment of reads in ${FQS} to ${SAM} succesful!"
 else
-   echo "Error! Alignment of reads in ${INP} to ${SAM} failed!"
+   echo "Error! Alignment of reads in ${FQS} to ${SAM} failed!"
    exit 1
 fi
 

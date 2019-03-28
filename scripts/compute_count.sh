@@ -19,13 +19,23 @@ if [ ! -e "${SMT}" ]; then
 	exit 1
 fi
 
-${SMT} idxstats ${INP} > ${OUT}
+${SMT} idxstats ${INP} > ${OUT}.tmp
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
    echo "Success! Read counting in ${INP} succesful!"
 else
    echo "Error! Read counting in ${INP} failed!"
+   exit 1
+fi
+
+cut -f1,3 ${OUT}.tmp > ${OUT}
+
+eStatus=$?
+if [ $eStatus -eq 0 ];then
+   echo "Success! Generating counts for ${INP} succesful!"
+else
+   echo "Error! Generating counts for ${INP} failed!"
    exit 1
 fi
 

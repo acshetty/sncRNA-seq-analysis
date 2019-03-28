@@ -8,7 +8,7 @@ units: .test/info/fastq.txt
 adapter: .test/references/adapters/adapters.fa
 
 # path to output directory
-outdir: /local/projects/TBALE/rnaseq/analysis/pipeline/test_v20190215
+outdir: /local/projects/TBALE/rnaseq/analysis/pipeline/test_v20190326/v2
 
 # Reference Types
 rnatypes:
