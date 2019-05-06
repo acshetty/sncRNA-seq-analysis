@@ -16,6 +16,6 @@ rule align_fastq:
     log:
     	logfile=config["outdir"] + "/020_align_reads/{sample}/{sample}.{rnatype}.bowtie.align.log"
     message:
-    	"### Aligning reads for the following file {input}"
+    	"### Aligning reads for the following file {params.trimfq}"
     shell:
     	'./scripts/align_reads.sh {params.bwtbin} {params.sambin} \'{params.extra}\' {params.refdir}/{params.idxdir}/{params.prefix} {params.trimfq} {output.bam} {log}'
