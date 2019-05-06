@@ -38,7 +38,7 @@ SAM=`echo ${OUT} | sed -e 's/bowtie.bam/bowtie.sam/'`
 #FQS = `cat ${INP} | tr '\n' ',' | sed -e 's/,$//'`
 FQS=${INP}
 
-${BWT} ${EXP} ${IDX} ${FQS} ${SAM} | tee ${LOG}
+${BWT} ${EXP} ${IDX} ${FQS} ${SAM} 2>&1 | tee ${LOG}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
@@ -48,11 +48,12 @@ else
    exit 1
 fi
 
-${SMT} view -bhS -o ${OUT} ${SAM}
+${SMT} view -bhS -F4 -o ${OUT} ${SAM}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
    echo "Success! Conversion of ${SAM} to ${OUT} succesful!"
+   rm ${SAM}
 else
    echo "Error! Conversion of ${SAM} to ${OUT} failed!"
    exit 1
