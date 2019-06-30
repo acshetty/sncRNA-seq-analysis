@@ -1,10 +1,10 @@
 #!/bin/sh
 
 function Usage {
-    echo "Usage: $1 <bowtie_bin_file> <samtools_bin_file> <extra_parameters> <refidx> <input_fastq> <align_bam> <logfile>"
+    echo "Usage: $1 <bowtie_bin_file> <samtools_bin_file> <seed_len> <max_multihits> <extra_parameters> <refidx> <input_fastq> <align_bam> <logfile>"
 }
 
-if (( $# < 7 )) || (( $# > 7 )); then
+if (( $# < 9 )) || (( $# > 9 )); then
     Usage $0
     exit 1
 fi
@@ -12,11 +12,13 @@ fi
 
 BWT=$1
 SMT=$2
-EXP=$3
-IDX=$4
-INP=$5
-OUT=$6
-LOG=$7
+SLN=$3
+MXH=$4
+EXP=$5
+IDX=$6
+INP=$7
+OUT=$8
+LOG=$9
 
 if [ ! -e "${BWT}" ]; then
 	echo "Error! Missing file ${BWT}!"
@@ -38,7 +40,7 @@ SAM=`echo ${OUT} | sed -e 's/bowtie.bam/bowtie.sam/'`
 #FQS = `cat ${INP} | tr '\n' ',' | sed -e 's/,$//'`
 FQS=${INP}
 
-${BWT} ${EXP} ${IDX} ${FQS} ${SAM} 2>&1 | tee ${LOG}
+${BWT} --seedlen ${SLN} -m ${MXH} ${EXP} ${IDX} ${FQS} ${SAM} 2>&1 | tee ${LOG}
 
 eStatus=$?
 if [ $eStatus -eq 0 ];then
@@ -58,6 +60,17 @@ else
    echo "Error! Conversion of ${SAM} to ${OUT} failed!"
    exit 1
 fi
+
+SID=`basename ${OUT} | cut -d'.' -f1`
+REF=`basename ${OUT} | cut -d'.' -f2`
+PFX=`echo ${OUT} | sed -e 's/.bam//'`
+
+printf "#Sample.ID\tReference\tTotal.Reads\tMapped.Reads\tUnmapped.Reads\tPercent.Mapped\n" > ${PFX}.alignment_statistics.txt
+TR=`grep "# reads processed" ${LOG} | cut -d':' -f2 | awk '{print $1}'`
+MR=`grep "# reads with at least one reported alignment" ${LOG} | cut -d':' -f2 | awk '{print $1}'`
+UN=`grep "# reads that failed to align" ${LOG} | cut -d':' -f2 | awk '{print $1}'`
+MM=`grep "# reads with alignments suppressed due to -m" ${LOG} | cut -d':' -f2 | awk '{print $1}'`
+printf "${SID} ${REF} ${TR} ${MR} ${UN} ${MM}" | awk '{printf $1"\t"$2"\t"$3"\t"$4"\t"($5 + $6)"\t"; printf "%0.2f\n", (($4 *100) / $3)}' >> ${PFX}.alignment_statistics.txt
 
 echo ""
 

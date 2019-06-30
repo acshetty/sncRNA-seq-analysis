@@ -5,10 +5,12 @@ rule align_fastq:
     	bwtbin=config["params"]["bowtie"], 
     	sambin=config["params"]["samtools"], 
     	trimfq=lambda wildcards: get_trimmed_fastq(wildcards.sample), 
-    	extra="-v 2 --seedlen 15 -m 5 -q --all --best --strata --sam", 
+    	extra="-v 2 -q --all --best --strata --sam", 
     	refdir=config["outdir"] + "/000_index_ref", 
     	idxdir=lambda wildcards: config[wildcards.rnatype]["outdir"], 
-    	prefix=lambda wildcards: get_index_prefix(config[wildcards.rnatype]["sequence"])
+    	prefix=lambda wildcards: get_index_prefix(config[wildcards.rnatype]["sequence"]), 
+    	seedlen=lambda wildcards: config[wildcards.rnatype]["seedlen"], 
+    	maxhits=lambda wildcards: config[wildcards.rnatype]["maxhits"]
     priority:
     	80
     output:
@@ -18,4 +20,4 @@ rule align_fastq:
     message:
     	"### Aligning reads for the following file {params.trimfq}"
     shell:
-    	'./scripts/align_reads.sh {params.bwtbin} {params.sambin} \'{params.extra}\' {params.refdir}/{params.idxdir}/{params.prefix} {params.trimfq} {output.bam} {log}'
+    	'./scripts/align_reads.sh {params.bwtbin} {params.sambin} {params.seedlen} {params.maxhits} \'{params.extra}\' {params.refdir}/{params.idxdir}/{params.prefix} {params.trimfq} {output.bam} {log}'

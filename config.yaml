@@ -8,7 +8,7 @@ units: .test/info/fastq.txt
 adapter: .test/references/adapters/adapters.fa
 
 # path to output directory
-outdir: /local/projects/TBALE/rnaseq/analysis/pipeline/test_v20190506/v1
+outdir: /local/projects/TBALE/rnaseq/analysis/pipeline/test_v20190628/v1
 
 # Reference Types
 rnatypes:
@@ -27,6 +27,10 @@ genome:
   outdir: genome
   # path to reference genome annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/genome/Homo_sapiens.GRCh38.93.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 ncRNA:
   # path to ncRNA sequence (FastA format)
@@ -35,6 +39,10 @@ ncRNA:
   outdir: ncRNA
   # path to ncRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/ncRNA/Homo_sapiens.GRCh38.ncrna.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 rRNA:
   # path to rRNA sequence (FastA format)
@@ -43,6 +51,10 @@ rRNA:
   outdir: rRNA
   # path to rRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/rRNA/human_rRNAdb.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 tRNA:
   # path to tRNA sequence (FastA format)
@@ -51,6 +63,10 @@ tRNA:
   outdir: tRNA
   # path to tRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/tRNA/hg19-tRNAs.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 miRNA:
   # path to miRNA sequence (FastA format)
@@ -59,6 +75,10 @@ miRNA:
   outdir: miRNA
   # path to miRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/miRNA/mature.hsa.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 piRNA:
   # path to piRNA sequence (FastA format)
@@ -67,6 +87,10 @@ piRNA:
   outdir: piRNA
   # path to piRNA annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/piRNA/piR_human.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 Rfam:
   # path to Rfam database sequence (FastA format)
@@ -75,6 +99,10 @@ Rfam:
   outdir: Rfam
   # path to Rfam database annotation (GTF/GFF3 format)
   annotation: .test/references/organism/Human/Rfam/Rfam-12.3-human.gtf
+  # minimum seed length
+  seedlen: 15
+  # maximum multiple hits per read
+  maxhits: 5
 
 params:
   # path to trimmomatic executable

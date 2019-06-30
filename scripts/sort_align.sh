@@ -39,6 +39,18 @@ else
    exit 1
 fi
 
+PFX=`echo ${OUT} | sed -e 's/.bam//'`
+
+${SMT} flagstat ${OUT} > ${PFX}.mapstats.txt
+
+eStatus=$?
+if [ $eStatus -eq 0 ];then
+   echo "Success! Alignment statistics of ${OUT} to ${PFX}.mapstats.txt succesful!"
+else
+   echo "Error! Alignment statistics of ${OUT} to ${PFX}.mapstats.txt failed!"
+   exit 1
+fi
+
 echo ""
 
 #####################################################################################
