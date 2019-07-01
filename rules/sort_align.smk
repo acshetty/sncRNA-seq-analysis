@@ -6,7 +6,7 @@ rule sort_align:
     output:
     	sortedbam=config["outdir"] + "/020_align_reads/{sample}/{sample}.{rnatype}.bowtie.sorted.bam"
     priority:
-    	75
+    	73
     message:
     	"### Sorting alignments for the following file {input.bam}"
     shell:

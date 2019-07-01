@@ -23,6 +23,16 @@ RNATYPES = "genome,ncRNA,rRNA,tRNA,miRNA,piRNA,Rfam".split(',')
 
 FOLDERS = "000_index_ref,010_trim_fq,020_align_reads,030_read_counts".split(',')
 
+##### pre workflow tasks #####
+for rnatype in config["rnatypes"]:
+	outfile = "{}/020_align_reads/000_alignment_statistics/{}.alignment_statistics.txt".format(config["outdir"], rnatype)
+	if os.path.exists(outfile):
+		os.remove(outfile)
+	
+	outfile = "{}/030_read_counts/000_count_matrix/{}.count_matrix.txt".format(config["outdir"], rnatype)
+	if os.path.exists(outfile):
+		os.remove(outfile)
+
 
 ##### target rules #####
 rule all:
@@ -30,8 +40,10 @@ rule all:
 		expand(config["outdir"] + "/000_index_ref/{rnatype}/{rnatype}.index.done", rnatype=config["rnatypes"]), 
 		expand(config["outdir"] + "/010_trim_fq/{sampleID}.trimmed.fastq.gz", sampleID=units["sampleID"]), 
 		expand(config["outdir"] + "/020_align_reads/{sampleID}/{sampleID}.{rnatype}.bowtie.bam", sampleID=samples["sample"], rnatype=config["rnatypes"]), 
+		expand(config["outdir"] + "/020_align_reads/000_alignment_statistics/{rnatype}.alignment_statistics.txt", rnatype=config["rnatypes"]), 
 		expand(config["outdir"] + "/020_align_reads/{sampleID}/{sampleID}.{rnatype}.bowtie.sorted.bam", sampleID=samples["sample"], rnatype=config["rnatypes"]), 
-		expand(config["outdir"] + "/030_read_counts/{sampleID}/{sampleID}.{rnatype}.bowtie.sorted.count", sampleID=samples["sample"], rnatype=config["rnatypes"])
+		expand(config["outdir"] + "/030_read_counts/{sampleID}/{sampleID}.{rnatype}.bowtie.sorted.count", sampleID=samples["sample"], rnatype=config["rnatypes"]), 
+		expand(config["outdir"] + "/030_read_counts/000_count_matrix/{rnatype}.count_matrix.txt", rnatype=config["rnatypes"])
 
 rule folders:
     output:
@@ -67,9 +79,13 @@ include: "rules/trim_fq.smk"
 
 include: "rules/align_reads.smk"
 
+include: "rules/merge_alignment_statistics.smk"
+
 include: "rules/sort_align.smk"
 
 include: "rules/compute_expr.smk"
+
+include: "rules/merge_expr.smk"
 
 #include: "rules/other.smk"
 
